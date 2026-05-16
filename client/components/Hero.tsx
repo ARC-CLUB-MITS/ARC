@@ -17,11 +17,11 @@ const WhatsAppIcon = ({ size = 16 }: { size?: number }) => (
 const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const kickerRef = useRef<HTMLParagraphElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const btnContainerRef = useRef<HTMLDivElement>(null);
   const [buttonTransform, setButtonTransform] = useState({ x: 0, y: 0 });
   const [activeButton, setActiveButton] = useState<string | null>(null);
-  const btnref = useRef()
 
   const handleButtonMouseMove = (e: React.MouseEvent<HTMLButtonElement>, buttonId: string) => {
     const button = e.currentTarget;
@@ -48,6 +48,10 @@ const Hero: React.FC = () => {
   };
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
@@ -55,10 +59,15 @@ const Hero: React.FC = () => {
         { y: 100, opacity: 0 }, 
         { y: 0, opacity: 1, duration: 1.5, delay: 0.5 }
       )
+      .fromTo(kickerRef.current,
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9 },
+        "-=1"
+      )
       .fromTo(subtitleRef.current,
         { y: 40, opacity: 0 },
         { y: 0, opacity: 1, duration: 1.2 },
-        "-=1"
+        "-=0.7"
       )
       .fromTo(btnContainerRef.current,
         { opacity: 0, scale: 0.95 },
@@ -133,8 +142,8 @@ const Hero: React.FC = () => {
           </div>
           <div className="font-mono text-[8px] leading-relaxed">
             <p><span className="text-green-400">$</span> <span className="text-gray-300">npm run analyze</span></p>
-            <p className="text-blue-300">✓ Analysis complete</p>
-            <p className="text-purple-300">✓ Paper generated</p>
+            <p className="text-blue-300">Analysis complete</p>
+            <p className="text-purple-300">Paper generated</p>
           </div>
         </div>
       </div> */}
@@ -231,8 +240,8 @@ const Hero: React.FC = () => {
         </div>
         <div className="font-mono text-[8px] leading-relaxed">
           <p><span className="text-green-400">$</span> <span className="text-gray-300">npm run analyze</span></p>
-          <p className="text-blue-300">✓ Analysis complete</p>
-          <p className="text-purple-300">✓ Paper generated</p>
+          <p className="text-blue-300">Analysis complete</p>
+          <p className="text-purple-300">Paper generated</p>
         </div>
       </div> */}
 
@@ -242,7 +251,7 @@ const Hero: React.FC = () => {
         <h1 ref={titleRef} style={{ opacity: 0 }} className="text-[clamp(5rem,12vw,12rem)] font-serif font-bold tracking-tighter leading-[0.85]  text-[var(--text-color)] mb-10">
           ARC <br /> CLUB
         </h1>
-        <p ref={subtitleRef} className="text-[12px] uppercase tracking-[0.5em] mb-10 text-[#d4a84a] font-medium">Applied Research & Creation</p>
+        <p ref={kickerRef} style={{ opacity: 0 }} className="text-[12px] uppercase tracking-[0.5em] mb-10 text-[#d4a84a] font-medium">Applied Research & Creation</p>
 
 
         <p ref={subtitleRef} style={{ opacity: 0 }} className="italic font-serif text-xl md:text-2xl text-gray-600 max-w-xl mx-auto mb-8 leading-relaxed">
@@ -263,7 +272,6 @@ const Hero: React.FC = () => {
             <Lightbulb size={16}/> Submit
           </button>
           <button 
-            ref={btnref}
             onClick={()=> window.open('https://chat.whatsapp.com/GxKLMyN99POCxahNy0QLxy')}
             onMouseMove={(e) => handleButtonMouseMove(e, 'thesis')}
             onMouseLeave={handleButtonMouseLeave}

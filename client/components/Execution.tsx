@@ -53,7 +53,7 @@ const Execution: React.FC = () => {
             <span className="italic text-[#1e3a5f]">happens daily</span>
           </h2>
           <p className="text-gray-600 italic font-serif text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
-            Each feature is build in a separate branch and merged after review.
+            Each feature is built in a separate branch and merged after review.
           </p>
         </div>
 

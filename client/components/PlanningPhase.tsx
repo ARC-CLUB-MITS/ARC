@@ -48,7 +48,7 @@ const PlanningPhase: React.FC = () => {
   const phases = [
     {
       title: 'Scope Definition',
-      desc: 'Features are defined and the tasks are created and divded among the alloted team members.',
+      desc: 'Features are defined, tasks are created, and responsibilities are assigned to the team members.',
       icon: Target,
     },
     {
