@@ -88,6 +88,20 @@ const Navbar: React.FC = () => {
     </svg>
   );
 
+  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `nav-link text-[10px] uppercase tracking-[0.2em] font-medium pb-1 transition-colors ${
+      isActive
+        ? 'text-[#d4a84a] border-b-2 border-[#d4a84a]'
+        : 'text-[var(--nav-text-color)] border-b-2 border-transparent hover:text-[#d4a84a]'
+    }`;
+
+  const mobileNavLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `text-[11px] uppercase tracking-[0.25em] font-medium py-2 transition-colors duration-300 ${
+      isActive
+        ? 'text-[#d4a84a] border-b-2 border-[#d4a84a]'
+        : 'text-[var(--nav-text-color)] border-b-2 border-transparent hover:text-[#d4a84a]'
+    }`;
+
   return (
     <>
       <nav 
@@ -98,13 +112,13 @@ const Navbar: React.FC = () => {
         className={`fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-12 py-3 transition-[background-color,box-shadow] duration-300 ${isScrolled || isMobileMenuOpen ? 'backdrop-blur-xl shadow-sm border-b border-[var(--text-color)]/10' : 'bg-transparent'}`}
       >
         <NavLink style={({isActive}) => ({color: isActive ? '#d4a84a' : 'var(--nav-text-color)'})} to="/" className="nav-logo flex gap-3 text-2xl font-serif font-bold tracking-tighter cursor-pointer" onClick={closeMobileMenu}>
-          <img src="/arc_club_logo.png" alt="arc_logo" className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-[72px] lg:h-[72px] bordr-2 boder-[#d4a84a]/40 hover:boder-[#d4a84a] transition-all mr-4" />
+          <img src="/arc_club_logo.png" alt="ARC Club logo" className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-[72px] lg:h-[72px] border-2 border-[#d4a84a]/0 hover:border-[#d4a84a]/40 rounded-full transition-all mr-4" />
         </NavLink>
         
         <div className="hidden md:flex items-center space-x-12">
-          <NavLink style={({isActive}) => ({color: isActive ? '#d4a84a' : 'var(--nav-text-color)', borderBottom: isActive ? '2px solid #d4a84a' : 'none'})} to="/" className="nav-link text-[10px] uppercase tracking-[0.2em] font-medium text-[var(--nav-text-color)] hover:text-[#d4a84a] transition-colors">Home</NavLink>
-          <NavLink style={({isActive}) => ({color: isActive ? '#d4a84a' : 'var(--nav-text-color)', borderBottom: isActive ? '2px solid #d4a84a' : 'none'})} to="/projects" className="nav-link text-[10px] uppercase tracking-[0.2em] font-medium text-[var(--nav-text-color)] hover:text-[#d4a84a] transition-colors">Projects</NavLink>
-          <NavLink style={({isActive}) => ({color: isActive ? '#d4a84a' : 'var(--nav-text-color)', borderBottom: isActive ? '2px solid #d4a84a' : 'none'})} to="/events" className="nav-link text-[10px] uppercase tracking-[0.2em] font-medium text-[var(--nav-text-color)] border-b-2 border-[#d4a84a] pb-1 hover:text-[#d4a84a] transition-colors">Events</NavLink>
+          <NavLink to="/" className={navLinkClass}>Home</NavLink>
+          <NavLink to="/projects" className={navLinkClass}>Projects</NavLink>
+          <NavLink to="/events" className={navLinkClass}>Events</NavLink>
         </div>
 
         <div className="flex items-center gap-3">
@@ -173,21 +187,21 @@ const Navbar: React.FC = () => {
             <NavLink
               to="/"
               onClick={closeMobileMenu}
-              className="text-[11px] uppercase tracking-[0.25em] font-medium text-[var(--nav-text-color)] hover:text-[#d4a84a] transition-colors duration-300 py-2"
+              className={mobileNavLinkClass}
             >
               Home
             </NavLink>
             <NavLink
               to="/projects"
               onClick={closeMobileMenu}
-              className="text-[11px] uppercase tracking-[0.25em] font-medium text-[var(--nav-text-color)] hover:text-[#d4a84a] transition-colors duration-300 py-2"
+              className={mobileNavLinkClass}
             >
               Projects
             </NavLink>
             <NavLink
               to="/events"
               onClick={closeMobileMenu}
-              className="text-[11px] uppercase tracking-[0.25em] font-medium text-[var(--nav-text-color)] hover:text-[#d4a84a] transition-colors duration-300 py-2 border-b-2 border-[#d4a84a] pb-1"
+              className={mobileNavLinkClass}
             >
               Events
             </NavLink>

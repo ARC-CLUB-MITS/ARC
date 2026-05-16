@@ -21,7 +21,7 @@ const projects: Project[] = [
     title: 'ARC Club Website',
     tagline: 'Our digital home, built from scratch.',
     description:
-      'Premium web experience for the ARC community — featuring smooth GSAP animations, responsive design, and a clean content architecture.',
+      'Premium web experience for the ARC community - featuring smooth GSAP animations, responsive design, and a clean content architecture.',
     status: 'active',
     tech: ['React', 'TypeScript', 'Tailwind', 'GSAP', 'Vite'],
     features: [
@@ -32,6 +32,33 @@ const projects: Project[] = [
     ],
     github: 'https://github.com/ARC-CLUB-MITS',
     live: 'https://arc-club-mits.vercel.app',
+  },
+  {
+    id: 2,
+    title: 'NoDue',
+    tagline: 'Digitizing campus clearance, end-to-end.',
+    description:
+      'A modern no-due management platform designed to simplify and automate academic clearance workflows for students, faculty, libraries, hostels, and administration through a centralized digital system.',
+    status: 'active',
+    tech: [
+      'React',
+      'TypeScript',
+      'Tailwind CSS',
+      'Node.js',
+      'Express.js',
+      'MongoDB',
+      'JWT',
+    ],
+    features: [
+      'Role-based authentication',
+      'Department-wise approval workflow',
+      'Real-time no-due status tracking',
+      'Admin, faculty, and student dashboards',
+      'Paperless clearance management',
+      'Responsive and modern UI',
+    ],
+    github: 'https://github.com/Usman0226/NoDues',
+    live: 'https://no-dues-psi.vercel.app/',
   },
 ];
 
@@ -56,6 +83,8 @@ const statusConfig = {
   },
 };
 
+const activeProjectCount = projects.filter((project) => project.status === 'active').length;
+
 const Projects: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -63,13 +92,17 @@ const Projects: React.FC = () => {
   const dividerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
       tl.fromTo(
         titleRef.current,
-        { y: 80, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.2, delay: 0.3 }
+        { y: 70, opacity: 0, filter: 'blur(8px)' },
+        { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1, delay: 0.25 }
       )
         .fromTo(
           dividerRef.current,
@@ -79,14 +112,14 @@ const Projects: React.FC = () => {
         )
         .fromTo(
           subtitleRef.current,
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1 },
+          { y: 24, opacity: 0, filter: 'blur(6px)' },
+          { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.85 },
           '-=0.5'
         )
         .fromTo(
           '.project-card',
-          { y: 50, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.5, stagger: 0.15, ease: 'power2.out' },
+          { y: 36, opacity: 0, filter: 'blur(10px)' },
+          { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.85, stagger: 0.15, ease: 'power3.out' },
           '-=0.5'
         );
 
@@ -127,7 +160,7 @@ const Projects: React.FC = () => {
             </div>
             <div className="text-left">
               <p className="text-[10px] font-mono font-bold text-gray-700">projects/</p>
-              <p className="text-[8px] text-gray-500">{projects.length} active</p>
+              <p className="text-[8px] text-gray-500">{activeProjectCount} active</p>
             </div>
           </div>
         </div>
@@ -173,16 +206,21 @@ const Projects: React.FC = () => {
           </p>
 
           {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {projects.map((project) => {
               const status = statusConfig[project.status];
+              const visibleTech = project.tech.slice(0, 5);
+              const extraTechCount = project.tech.length - visibleTech.length;
+              const visibleFeatures = project.features.slice(0, 4);
+              const extraFeatureCount = project.features.length - visibleFeatures.length;
+
               return (
                 <div
                   key={project.id}
-                  className="project-card group relative text-left rounded-2xl border border-[var(--text-color)]/8 bg-gradient-to-br from-white to-gray-50/50 overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-all duration-500 hover:border-[#d4a84a]/25 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
+                  className="project-card group relative h-full text-left rounded-2xl border border-[var(--text-color)]/8 bg-gradient-to-br from-white to-gray-50/50 overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-[border-color,box-shadow,transform] duration-500 hover:-translate-y-1 hover:border-[#d4a84a]/25 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
                   style={{ opacity: 0 }}
                 >
-                  <div className="p-5">
+                  <div className="flex h-full flex-col p-5">
                     {/* Header: Status + Number */}
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-1.5">
@@ -204,9 +242,9 @@ const Projects: React.FC = () => {
                       {project.tagline}
                     </p>
 
-                    {/* Tech Stack — inline minimal */}
+                    {/* Tech Stack - inline minimal */}
                     <div className="flex flex-wrap gap-1.5 mb-4">
-                      {project.tech.map((t) => (
+                      {visibleTech.map((t) => (
                         <span
                           key={t}
                           className="px-2 py-0.5 rounded-md text-[8px] uppercase tracking-[0.1em] font-semibold bg-[var(--text-color)]/[0.04] text-[var(--nav-text-color)]/70 border border-[var(--text-color)]/[0.06]"
@@ -214,6 +252,11 @@ const Projects: React.FC = () => {
                           {t}
                         </span>
                       ))}
+                      {extraTechCount > 0 && (
+                        <span className="px-2 py-0.5 rounded-md text-[8px] uppercase tracking-[0.1em] font-semibold bg-[#d4a84a]/10 text-[#b98b28] border border-[#d4a84a]/20">
+                          +{extraTechCount} more
+                        </span>
+                      )}
                     </div>
 
                     {/* Description */}
@@ -221,22 +264,27 @@ const Projects: React.FC = () => {
                       {project.description}
                     </p>
 
-                    {/* Features — compact list */}
+                    {/* Features - compact list */}
                     <div className="space-y-1.5 mb-5">
-                      {project.features.map((f, i) => (
-                        <div key={i} className="flex items-center gap-2 text-[11px] text-[var(--nav-text-color)]">
+                      {visibleFeatures.map((f) => (
+                        <div key={f} className="flex items-center gap-2 text-[11px] text-[var(--nav-text-color)]">
                           <svg className="w-3 h-3 text-[#d4a84a] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
                           {f}
                         </div>
                       ))}
+                      {extraFeatureCount > 0 && (
+                        <div className="text-[10px] uppercase tracking-[0.15em] font-semibold text-[#d4a84a]">
+                          +{extraFeatureCount} more features
+                        </div>
+                      )}
                     </div>
 
                     {/* Divider */}
-                    <div className="h-[1px] bg-[var(--text-color)]/[0.06] mb-4" />
+                    <div className="mt-auto h-[1px] bg-[var(--text-color)]/[0.06] mb-4" />
 
-                    {/* Actions — clean icon buttons */}
+                    {/* Actions - clean icon buttons */}
                     <div className="flex items-center gap-2">
                       {project.github && (
                         <a
