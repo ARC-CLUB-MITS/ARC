@@ -21,7 +21,7 @@ const projects: Project[] = [
     title: 'ARC Club Website',
     tagline: 'Our digital home, built from scratch.',
     description:
-      'Premium web experience for the ARC community — featuring smooth GSAP animations, responsive design, and a clean content architecture.',
+      'Premium web experience for the ARC community - featuring smooth GSAP animations, responsive design, and a clean content architecture.',
     status: 'active',
     tech: ['React', 'TypeScript', 'Tailwind', 'GSAP', 'Vite'],
     features: [
@@ -32,6 +32,33 @@ const projects: Project[] = [
     ],
     github: 'https://github.com/ARC-CLUB-MITS',
     live: 'https://arc-club-mits.vercel.app',
+  },
+  {
+    id: 2,
+    title: 'NoDue',
+    tagline: 'Digitizing campus clearance, end-to-end.',
+    description:
+      'A modern no-due management platform designed to simplify and automate academic clearance workflows for students, faculty, libraries, hostels, and administration through a centralized digital system.',
+    status: 'active',
+    tech: [
+      'React',
+      'TypeScript',
+      'Tailwind CSS',
+      'Node.js',
+      'Express.js',
+      'MongoDB',
+      'JWT',
+    ],
+    features: [
+      'Role-based authentication',
+      'Department-wise approval workflow',
+      'Real-time no-due status tracking',
+      'Admin, faculty, and student dashboards',
+      'Paperless clearance management',
+      'Responsive and modern UI',
+    ],
+    github: 'https://github.com/Usman0226/NoDues',
+    live: 'https://no-dues-psi.vercel.app/',
   },
 ];
 
